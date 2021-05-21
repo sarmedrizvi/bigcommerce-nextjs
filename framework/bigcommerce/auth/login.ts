@@ -42,29 +42,29 @@ async function login({
 }): Promise<LoginResult> {
   config = getConfig(config)
 
-  const { data, res } = await config.fetch<RecursivePartial<LoginMutation>>(
-    query,
-    { variables }
-  )
+  const props = await config.fetch<RecursivePartial<LoginMutation>>(query, {
+    variables,
+  })
+  const { data, res } = props
   // Bigcommerce returns a Set-Cookie header with the auth cookie
   let cookie = res.headers.get('Set-Cookie')
 
   if (cookie && typeof cookie === 'string') {
     // In development, don't set a secure cookie or the browser will ignore it
-    if (process.env.NODE_ENV !== 'production') {
-      cookie = cookie.replace('; Secure', '')
-      // SameSite=none can't be set unless the cookie is Secure
-      // bc seems to sometimes send back SameSite=None rather than none so make
-      // this case insensitive
-      cookie = cookie.replace(/; SameSite=none/gi, '; SameSite=lax')
-    }
+    // if (process.env.NODE_ENV !== 'production') {
+    cookie = cookie.replace('; Secure', '')
+    // SameSite=none can't be set unless the cookie is Secure
+    // bc seems to sometimes send back SameSite=None rather than none so make
+    // this case insensitive
+    cookie = cookie.replace(/; SameSite=none/gi, '; SameSite=lax')
+    // }
 
     response.setHeader(
       'Set-Cookie',
       concatHeader(response.getHeader('Set-Cookie'), cookie)!
     )
   }
-
+  // console.log(cookie)
   return {
     result: data.login?.result,
   }
