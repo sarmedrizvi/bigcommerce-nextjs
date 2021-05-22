@@ -9,6 +9,16 @@ interface Props {
   data: String
 }
 
+export async function getStaticProps() {
+  const res = await CreateClient({
+    'sys.contentType.sys.id': 'deliveryInformation',
+  })
+  return {
+    props: { data: res },
+    revalidate: 14400,
+  }
+}
+
 const DeliveryInformation = ({ data }: Props) => {
   const title = get(data, 'items[0].fields.title', '')
   const description = get(data, 'items[0].fields.description', {})
@@ -18,16 +28,6 @@ const DeliveryInformation = ({ data }: Props) => {
       <span>{documentToReactComponents(description)}</span>
     </div>
   )
-}
-
-export async function getStaticProps() {
-  const res = await CreateClient({
-    'sys.contentType.sys.id': 'deliveryInformation',
-  })
-  return {
-    props: { data: res },
-    revalidate: 14400,
-  }
 }
 
 export default DeliveryInformation

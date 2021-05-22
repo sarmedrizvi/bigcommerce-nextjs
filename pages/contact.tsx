@@ -8,18 +8,6 @@ import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 interface Props {
   data: String
 }
-
-const DeliveryInformation = ({ data }: Props) => {
-  const title = get(data, 'items[0].fields.title', '')
-  const description = get(data, 'items[0].fields.description', {})
-  return (
-    <div className="mx-3">
-      <h1 className="mb-5 text-center">{title}</h1>
-      <span>{documentToReactComponents(description)}</span>
-    </div>
-  )
-}
-
 export async function getStaticProps() {
   const res = await CreateClient({
     'sys.contentType.sys.id': 'deliveryInformation',
@@ -30,5 +18,15 @@ export async function getStaticProps() {
   }
 }
 
-export default DeliveryInformation
-DeliveryInformation.Layout = Layout
+export default function Contact({ data }: Props) {
+  const title = get(data, 'items[0].fields.title', '')
+  const description = get(data, 'items[0].fields.description', {})
+  return (
+    <div className="mx-3">
+      <h1 className="mb-5 text-center">{title}</h1>
+      <span>{documentToReactComponents(description)}</span>
+    </div>
+  )
+}
+
+Contact.Layout = Layout
