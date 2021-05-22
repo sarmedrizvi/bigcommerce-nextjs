@@ -19,7 +19,7 @@ export async function getStaticProps() {
   }
 }
 
-const DeliveryInformation = ({ data }: Props) => {
+export default function DeliveryInformation({ data }: Props) {
   const title = get(data, 'items[0].fields.title', '')
   const description = get(data, 'items[0].fields.description', {})
   return (
@@ -30,5 +30,4 @@ const DeliveryInformation = ({ data }: Props) => {
   )
 }
 
-export default DeliveryInformation
 DeliveryInformation.Layout = Layout
