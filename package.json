@@ -14,7 +14,7 @@
   "sideEffects": false,
   "license": "MIT",
   "engines": {
-    "node": "12.x"
+    "node": "14.x"
   },
   "dependencies": {
     "@contentful/rich-text-react-renderer": "^14.1.3",
