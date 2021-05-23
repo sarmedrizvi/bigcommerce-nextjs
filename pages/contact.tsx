@@ -8,7 +8,7 @@ import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 interface Props {
   data: String
 }
-export async function getStaticProps() {
+export async function getInitialProps() {
   const res = await CreateClient({
     'sys.contentType.sys.id': 'deliveryInformation',
   })
