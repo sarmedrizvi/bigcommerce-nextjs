@@ -9,16 +9,6 @@ interface Props {
   data: String
 }
 
-export async function getInitialProps() {
-  const res = await CreateClient({
-    'sys.contentType.sys.id': 'deliveryInformation',
-  })
-  return {
-    props: { data: res },
-    revalidate: 14400,
-  }
-}
-
 export default function DeliveryInformation({ data }: Props) {
   const title = get(data, 'items[0].fields.title', '')
   const description = get(data, 'items[0].fields.description', {})
@@ -28,6 +18,14 @@ export default function DeliveryInformation({ data }: Props) {
       <span>{documentToReactComponents(description)}</span>
     </div>
   )
+}
+DeliveryInformation.getInitialProps = async () => {
+  const res = await CreateClient({
+    'sys.contentType.sys.id': 'deliveryInformation',
+  })
+  return {
+    data: res,
+  }
 }
 
 DeliveryInformation.Layout = Layout

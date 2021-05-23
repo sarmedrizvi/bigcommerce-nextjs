@@ -8,15 +8,6 @@ import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 interface Props {
   data: String
 }
-export async function getInitialProps() {
-  const res = await CreateClient({
-    'sys.contentType.sys.id': 'deliveryInformation',
-  })
-  return {
-    props: { data: res },
-    revalidate: 14400,
-  }
-}
 
 export default function Contact({ data }: Props) {
   const title = get(data, 'items[0].fields.title', '')
@@ -27,6 +18,15 @@ export default function Contact({ data }: Props) {
       <span>{documentToReactComponents(description)}</span>
     </div>
   )
+}
+Contact.getInitialProps = async () => {
+  const res = await CreateClient({
+    'sys.contentType.sys.id': 'deliveryInformation',
+  })
+  return {
+    props: { data: res },
+    revalidate: 14400,
+  }
 }
 
 Contact.Layout = Layout
