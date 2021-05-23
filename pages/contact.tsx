@@ -4,6 +4,7 @@ import type { GetStaticPropsContext } from 'next'
 import CreateClient from 'util/hooks/create-client'
 import get from 'lodash/get'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
+import { GetStaticProps } from 'next'
 
 interface Props {
   data: String
@@ -19,12 +20,12 @@ export default function Contact({ data }: Props) {
     </div>
   )
 }
-Contact.getInitialProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const res = await CreateClient({
     'sys.contentType.sys.id': 'deliveryInformation',
   })
   return {
-    data: res,
+    props: { data: res },
   }
 }
 
