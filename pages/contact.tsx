@@ -24,8 +24,7 @@ Contact.getInitialProps = async () => {
     'sys.contentType.sys.id': 'deliveryInformation',
   })
   return {
-    props: { data: res },
-    revalidate: 14400,
+    data: res,
   }
 }
 
