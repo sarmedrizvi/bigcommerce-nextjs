@@ -1,7 +1,7 @@
 import React from 'react'
 import { Layout } from '@components/common'
 import type { GetStaticPropsContext } from 'next'
-import CreateClient from 'util/hooks/create-client'
+import CreateClient from '@hooks/create-client'
 import get from 'lodash/get'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { GetStaticProps } from 'next'
