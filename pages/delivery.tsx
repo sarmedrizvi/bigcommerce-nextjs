@@ -7,6 +7,8 @@ import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { GetServerSideProps } from 'next'
 import { getConfig } from '@framework/api'
 import getAllPages from '@framework/common/get-all-pages'
+import { Container, Text } from '@components/ui'
+import { Bag } from '@components/icons'
 
 interface Props {
   data: String
