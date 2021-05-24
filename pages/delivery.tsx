@@ -5,11 +5,26 @@ import CreateClient from '@hooks/create-client'
 import get from 'lodash/get'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { GetServerSideProps } from 'next'
+import { getConfig } from '@framework/api'
+import getAllPages from '@framework/common/get-all-pages'
 
 interface Props {
   data: String
 }
 
+export async function getStaticProps({
+  preview,
+  locale,
+}: GetStaticPropsContext) {
+  const config = getConfig({ locale })
+  const { pages } = await getAllPages({ config, preview })
+  const res = await CreateClient({
+    content_type: 'deliveryInformation',
+  })
+  return {
+    props: { pages, data: res },
+  }
+}
 export default function DeliveryInformation({ data }: Props) {
   const title = get(data, 'items[0].fields.title', '')
   const description = get(data, 'items[0].fields.description', {})
@@ -19,14 +34,6 @@ export default function DeliveryInformation({ data }: Props) {
       <span>{documentToReactComponents(description)}</span>
     </div>
   )
-}
-export const getServerSideProps: GetServerSideProps = async () => {
-  const res = await CreateClient({
-    'sys.contentType.sys.id': 'deliveryInformation',
-  })
-  return {
-    props: { data: res },
-  }
 }
 
 DeliveryInformation.Layout = Layout
