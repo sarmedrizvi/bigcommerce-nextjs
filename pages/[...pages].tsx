@@ -54,7 +54,7 @@ export async function getStaticPaths({ locales }: GetStaticPathsContext) {
   log()
 
   return {
-    paths: [...paths, '/delivery'],
+    paths,
     // Fallback shouldn't be enabled here or otherwise this route
     // will catch every page, even 404s, and we don't want that
     fallback: false,
