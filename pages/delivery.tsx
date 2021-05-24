@@ -18,21 +18,31 @@ export async function getStaticProps({
 }: GetStaticPropsContext) {
   const config = getConfig({ locale })
   const { pages } = await getAllPages({ config, preview })
-  const res = await CreateClient({
-    content_type: 'deliveryInformation',
-  })
+  // const res = await CreateClient({
+  //   content_type: 'deliveryInformation',
+  // })
   return {
-    props: { pages, data: res },
+    props: { pages, data: {} },
   }
 }
 export default function DeliveryInformation({ data }: Props) {
   const title = get(data, 'items[0].fields.title', '')
   const description = get(data, 'items[0].fields.description', {})
   return (
-    <div className="mx-3">
-      <h1 className="mb-5 text-center">{title}</h1>
-      <span>{documentToReactComponents(description)}</span>
-    </div>
+    <Container>
+      <Text variant="pageHeading">My Orders</Text>
+      <div className="flex-1 p-24 flex flex-col justify-center items-center ">
+        <span className="border border-dashed border-secondary rounded-full flex items-center justify-center w-16 h-16 p-12 bg-primary text-primary">
+          <Bag className="absolute" />
+        </span>
+        <h2 className="pt-6 text-2xl font-bold tracking-wide text-center">
+          No orders found
+        </h2>
+        <p className="text-accents-6 px-10 text-center pt-2">
+          Biscuit oat cake wafer icing ice cream tiramisu pudding cupcake.
+        </p>
+      </div>
+    </Container>
   )
 }
 
