@@ -25,10 +25,10 @@ const useStyles = makeStyles({
 const Navbar = ({ navChildren }: Props) => {
   const classes = useStyles()
   console.log(navChildren)
-  const renderTree = (nodes: Object) => (
+  const renderTree = (nodes: any) => (
     <TreeItem key={nodes.id} nodeId={nodes.id} label={nodes.name}>
       {Array.isArray(nodes.children)
-        ? nodes.children.map((node) => renderTree(node))
+        ? nodes.children.map((node: any) => renderTree(node))
         : null}
     </TreeItem>
   )
