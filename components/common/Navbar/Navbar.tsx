@@ -11,9 +11,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import TreeItem from '@material-ui/lab/TreeItem'
 
 interface Props {
-  navChildren: {
-    data: Array<Object>
-  }
+  navChildren: any
 }
 const useStyles = makeStyles({
   root: {

@@ -44,10 +44,7 @@ interface Props {
     pages?: Page[]
     commerceFeatures: Record<string, boolean>
   }
-  navChildren: Object
-}
-interface Nav {
-  navChildren: Object
+  navChildren: any
 }
 
 const Layout = ({
