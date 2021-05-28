@@ -9,6 +9,7 @@ export type SearchProductsInput = {
   categoryId?: number
   brandId?: number
   sort?: string
+  c?: string
 }
 
 export const handler: SWRHook<
@@ -20,9 +21,10 @@ export const handler: SWRHook<
     url: '/api/bigcommerce/catalog/products',
     method: 'GET',
   },
-  fetcher({ input: { search, categoryId, brandId, sort }, options, fetch }) {
+  fetcher({ input: { search, categoryId, brandId, sort, c }, options, fetch }) {
     // Use a dummy base as we only care about the relative path
     const url = new URL(options.url!, 'http://a')
+    // console.log({ c, url })
 
     if (search) url.searchParams.set('search', search)
     if (Number.isInteger(categoryId))
@@ -30,19 +32,21 @@ export const handler: SWRHook<
     if (Number.isInteger(brandId))
       url.searchParams.set('brand', String(brandId))
     if (sort) url.searchParams.set('sort', sort)
-
+    if (c) url.searchParams.set('categories%3Ain', String(c))
     return fetch({
       url: url.pathname + url.search,
       method: options.method,
     })
   },
   useHook: ({ useData }) => (input = {}) => {
+    // console.log(input)
     return useData({
       input: [
         ['search', input.search],
         ['categoryId', input.categoryId],
         ['brandId', input.brandId],
         ['sort', input.sort],
+        ['category', input.c],
       ],
       swrOptions: {
         revalidateOnFocus: false,

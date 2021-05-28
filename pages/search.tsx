@@ -56,10 +56,9 @@ export default function Search({
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const [activeFilter, setActiveFilter] = useState('')
   const [toggleFilter, setToggleFilter] = useState(false)
-
   const router = useRouter()
   const { asPath } = router
-  const { q, sort } = router.query
+  const { q, sort, c } = router.query
   // `q` can be included but because categories and designers can't be searched
   // in the same way of products, it's better to ignore the search input if one
   // of those is selected
@@ -75,9 +74,10 @@ export default function Search({
 
   const { data } = useSearch({
     search: typeof q === 'string' ? q : '',
-    categoryId: activeCategory?.entityId,
+    categoryId: activeCategory?.entityId || Number(c),
     brandId: activeBrand?.entityId,
     sort: typeof sort === 'string' ? sort : '',
+    c: typeof c === 'string' ? c : '',
   })
 
   const handleClick = (event: any, filter: string) => {

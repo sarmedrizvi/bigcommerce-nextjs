@@ -10,6 +10,7 @@ interface Props {
 }
 
 const Navbar = ({ navChildren }: Props) => {
+  // console.log(navChildren)
   return (
     <NavbarRoot>
       <Container>

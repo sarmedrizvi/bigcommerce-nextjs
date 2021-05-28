@@ -7,7 +7,7 @@ const Categories = ({ navChildren }: any) => {
   const [menuPosition, setMenuPosition] = useState<any>(null)
   const handleItemClick = (event: React.MouseEvent, link: String) => {
     if (link) {
-      Router.push(`/search${link}`)
+      Router.push(`/search?c=${link}`)
     }
     setMenuPosition(null)
   }
@@ -27,13 +27,13 @@ const Categories = ({ navChildren }: any) => {
       {nodes.children.length && Array.isArray(nodes.children) ? (
         <NestedMenuItem
           parentMenuOpen={!!menuPosition}
-          onClick={(e) => handleItemClick(e, nodes.url)}
+          onClick={(e) => handleItemClick(e, nodes.id)}
           label={nodes.name}
         >
           {nodes.children.map((node: any) => renderTree(node))}
         </NestedMenuItem>
       ) : (
-        <MenuItem onClick={(e) => handleItemClick(e, nodes.url)}>
+        <MenuItem onClick={(e) => handleItemClick(e, nodes.id)}>
           {nodes.name}
         </MenuItem>
       )}
