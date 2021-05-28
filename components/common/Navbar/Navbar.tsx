@@ -4,34 +4,12 @@ import { Logo, Container } from '@components/ui'
 import { Searchbar, UserNav } from '@components/common'
 import NavbarRoot from './NavbarRoot'
 import s from './Navbar.module.css'
-import { makeStyles } from '@material-ui/core/styles'
-import TreeView from '@material-ui/lab/TreeView'
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import ChevronRightIcon from '@material-ui/icons/ChevronRight'
-import TreeItem from '@material-ui/lab/TreeItem'
-
+import Categories from '../Categories'
 interface Props {
   navChildren: any
 }
-const useStyles = makeStyles({
-  root: {
-    height: 10,
-    flexGrow: 1,
-    maxWidth: 400,
-    width: 210,
-  },
-})
 
 const Navbar = ({ navChildren }: Props) => {
-  const classes = useStyles()
-  console.log(navChildren)
-  const renderTree = (nodes: any) => (
-    <TreeItem key={nodes.id} nodeId={nodes.id} label={nodes.name}>
-      {Array.isArray(nodes.children)
-        ? nodes.children.map((node: any) => renderTree(node))
-        : null}
-    </TreeItem>
-  )
   return (
     <NavbarRoot>
       <Container>
@@ -55,23 +33,12 @@ const Navbar = ({ navChildren }: Props) => {
               <Link href="/search?q=shoes">
                 <a className={s.link}>Shoes</a>
               </Link>
+              <Categories navChildren={navChildren} />
             </nav>
           </div>
 
           <div className="justify-center flex-1 hidden lg:flex">
             <Searchbar />
-            <TreeView
-              className={`${classes.root}}`}
-              defaultCollapseIcon={<ExpandMoreIcon />}
-              defaultExpanded={[]}
-              defaultExpandIcon={<ChevronRightIcon />}
-            >
-              {renderTree({
-                id: 'root',
-                name: 'Categories',
-                children: navChildren.data,
-              })}
-            </TreeView>
           </div>
 
           <div className="flex justify-end flex-1 space-x-8">
