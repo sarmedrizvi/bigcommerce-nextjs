@@ -2,10 +2,13 @@ import { Menu, MenuItem } from '@material-ui/core'
 import React, { useState } from 'react'
 import NestedMenuItem from 'material-ui-nested-menu-item'
 import s from '../Navbar/Navbar.module.css'
-
+import Router from 'next/router'
 const Categories = ({ navChildren }: any) => {
   const [menuPosition, setMenuPosition] = useState<any>(null)
-  const handleItemClick = (event: React.MouseEvent) => {
+  const handleItemClick = (event: React.MouseEvent, link: String) => {
+    if (link) {
+      Router.push(`/search${link}`)
+    }
     setMenuPosition(null)
   }
   const handleRightClick = (event: React.MouseEvent) => {
@@ -24,13 +27,15 @@ const Categories = ({ navChildren }: any) => {
       {nodes.children.length && Array.isArray(nodes.children) ? (
         <NestedMenuItem
           parentMenuOpen={!!menuPosition}
-          onClick={handleItemClick}
+          onClick={(e) => handleItemClick(e, nodes.url)}
           label={nodes.name}
         >
           {nodes.children.map((node: any) => renderTree(node))}
         </NestedMenuItem>
       ) : (
-        <MenuItem onClick={handleItemClick}>{nodes.name}</MenuItem>
+        <MenuItem onClick={(e) => handleItemClick(e, nodes.url)}>
+          {nodes.name}
+        </MenuItem>
       )}
     </div>
   )

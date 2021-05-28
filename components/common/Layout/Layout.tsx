@@ -1,7 +1,7 @@
 import cn from 'classnames'
 import dynamic from 'next/dynamic'
 import s from './Layout.module.css'
-import { useRouter } from 'next/router'
+import Router, { useRouter } from 'next/router'
 import React, { FC } from 'react'
 import { useUI } from '@components/ui/context'
 import { Navbar, Footer } from '@components/common'
@@ -12,6 +12,7 @@ import CartSidebarView from '@components/cart/CartSidebarView'
 import LoginView from '@components/auth/LoginView'
 import { CommerceProvider } from '@framework'
 import type { Page } from '@framework/common/get-all-pages'
+import NProgress from 'nprogress'
 
 const Loading = () => (
   <div className="w-80 h-80 flex items-center text-center justify-center p-3">
@@ -61,6 +62,16 @@ const Layout = ({
   } = useUI()
   const { acceptedCookies, onAcceptCookies } = useAcceptCookies()
   const { locale = 'en-US' } = useRouter()
+  Router.events.on('routeChangeStart', () => {
+    NProgress.start()
+  })
+  Router.events.on('routeChangeComplete', () => {
+    NProgress.done()
+  })
+
+  Router.events.on('routeChangeError', () => {
+    NProgress.done()
+  })
   return (
     <CommerceProvider locale={locale}>
       <div className={cn(s.root)}>
