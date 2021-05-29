@@ -22,18 +22,6 @@ const Navbar = ({ navChildren }: Props) => {
               </a>
             </Link>
             <nav className="hidden ml-6 space-x-4 lg:block">
-              <Link href="/search">
-                <a className={s.link}>All</a>
-              </Link>
-              <Link href="/search?q=clothes">
-                <a className={s.link}>Clothes</a>
-              </Link>
-              <Link href="/search?q=accessories">
-                <a className={s.link}>Accessories</a>
-              </Link>
-              <Link href="/search?q=shoes">
-                <a className={s.link}>Shoes</a>
-              </Link>
               <Categories navChildren={navChildren} />
             </nav>
           </div>
@@ -47,8 +35,12 @@ const Navbar = ({ navChildren }: Props) => {
           </div>
         </div>
 
-        <div className="flex pb-4 lg:px-6 lg:hidden">
+        <div
+          className="flex pb-4 lg:px-6 lg:hidden"
+          style={{ flexDirection: 'column', alignItems: 'center' }}
+        >
           <Searchbar id="mobile-search" />
+          <Categories navChildren={navChildren} />
         </div>
       </Container>
     </NavbarRoot>
